@@ -19,11 +19,126 @@ classifiers = [
     "Topic :: Multimedia :: Graphics",
     "Topic :: Utilities",
 ]
-dependencies = []
+dependencies = [
+    "pyexiftool == 0.5.*",
+    "rich == 14.2.*",
+    "typer-slim[standard] == 0.20.*",
+]
+
+[dependency-groups]
+dev = [
+    "coverage[toml]",
+    "mypy == 1.18.2",
+    "pre-commit-hooks == 6.0.*",
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "ruff == 0.14.3",
+]
 
 [project.scripts]
-exifmn = "exif_maker_notes:main"
+exifmn = "exif_maker_notes.cli:application"
 
 [build-system]
 requires = ["uv_build>=0.9.7,<0.10.0"]
 build-backend = "uv_build"
+
+[tool.coverage.run]
+branch = true
+source = ["src/exif_maker_notes"]
+
+[tool.coverage.report]
+precision = 2
+include_namespace_packages = true
+exclude_lines = [
+    "pragma: no cover",
+    "if self.debug:",
+    "if debug:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "__repr__",
+]
+ignore_errors = true
+
+[tool.ruff]
+src = ["src"]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "YTT",  # flake8-2020
+    "ANN",  # flake8-annotations
+    "S",    # flakey-bandit
+    "BLE",  # flake8-blind-except
+    "FBT",  # flake8-boolean-trap
+    "B",    # flake8-bugbear
+    "A",    # flake8-builtins
+    "COM",  # flake8-commas
+    "C4",   # flake8-comprehensions
+    "DTZ",  # flake8-datetimez
+    "EM",   # flake8-errmsg
+    "EXE",  # flake8-executable
+    "FA",   # flake8-future-annotations
+    "ISC",  # flake8-implicit-str-concat
+    "ICN",  # flake8-import-conventions
+    "LOG",  # flake8-logging
+    "G",    # flake8-logging-format
+    "PIE",  # flake8-pie
+    "T20",  # flake8-print
+    "PT",   # flake8-pytest-style
+    "Q",    # flake8-quotes
+    "RSE",  # flake8-raise
+    "RET",  # flake8-return
+    "SLF",  # flake8-self
+    "SIM",  # flake8-simplify
+    "TID",  # flake8-tidy-imports
+    "TC",   # flake8-type-checking
+    "ARG",  # flake8-unused-arguments
+    "PTH",  # flake8-use-pathlib
+    "FLY",  # flynt
+    "I",    # isort
+    "C90",  # mccabe (complexity)
+    "N",    # pep8-naming
+    "PERF", # perflint
+    "E",    # pycodestyle
+    "W",    # pycodestyle
+    "DOC",  # pydoclint
+    "D",    # pydocstyle
+    "F",    # pyflakes
+    "PGH",  # pygrep-hooks
+    "PL",   # pylint
+    "UP",   # pyupgrade
+    "FURB", # refurb
+    "RUF",  # ruff
+    "TRY",  # tryceratops
+]
+ignore = [
+    "D203",    # one-blank-line-before-class (conflicting with no-blank-line-before-class)
+    "D213",    # multi-line-summary-second-line (conflicting with multi-line-summary-first-line)
+    "FBT001",  # boolean-positional-arg-in-function-definition (not wanted)
+    "FBT002",  # boolean-default-value-in-function-definition (not wanted)
+    "PLC0415", # import-outside-top-level (not wanted)
+]
+pylint = { max-args = 12 }
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/*" = ["S101"]
+
+[tool.mypy]
+strict = true
+pretty = true
+no_implicit_reexport = false
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["exiftool.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--ignore=src/exif_maker_notes/tests/ --cov=exif_maker_notes --cov-report=term-missing:skip-covered --cov-report xml --cov-report html:coverage"
+testpaths = ["tests"]

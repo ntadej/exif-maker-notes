@@ -88,12 +88,23 @@ def list_exif(
     """List EXIF data for a list of photos."""
     logger = setup_logger(state, "list")
 
-    import exiftool
+    from exif_maker_notes.tool import list_metadata
 
-    with exiftool.ExifToolHelper(common_args=["-G"]) as et:
-        metadata = et.get_metadata(photos)
-        for d in metadata:
-            logger.info("Metadata for %s:", d["SourceFile"])
-            for key, value in d.items():
-                if key != "SourceFile":
-                    logger.info("  %s: %s", key, value)
+    list_metadata(photos, logger)
+
+
+@application.command()
+def fix(
+    photos: Annotated[
+        list[Path],
+        typer.Argument(
+            help="List of photo paths.",
+        ),
+    ],
+) -> None:
+    """Apply fixes to EXIF data for a list of photos."""
+    logger = setup_logger(state, "fix")
+
+    from exif_maker_notes.fixes import apply_fixes
+
+    apply_fixes(photos, logger)

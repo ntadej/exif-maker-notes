@@ -1,4 +1,4 @@
-"""Main CLI tests."""
+"""Configuration CLI tests."""
 
 from typer.testing import CliRunner
 

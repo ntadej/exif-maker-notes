@@ -5,8 +5,10 @@ repos:
       - id: mypy
         args: []
         additional_dependencies:
+          - platformdirs
           - pytest
           - rich
+          - tomli_w
           - typer
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.14.3

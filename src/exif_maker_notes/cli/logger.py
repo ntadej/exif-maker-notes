@@ -6,7 +6,11 @@ from logging import DEBUG, INFO, Formatter, Logger, getLogger
 from logging.handlers import RotatingFileHandler
 from typing import TYPE_CHECKING
 
+from rich import print as rprint
+from rich.color import Color
 from rich.logging import RichHandler
+from rich.panel import Panel
+from rich.style import Style
 from rich.table import Table
 
 if TYPE_CHECKING:
@@ -44,6 +48,22 @@ def setup_logger(state: TyperState, name: str | None = None) -> Logger:
         logger.setLevel(INFO)
 
     return logger
+
+
+def info_panel(message: str | Table, title: str = "Information") -> None:
+    """Print info message in a panel."""
+    rprint(
+        Panel(
+            message,
+            title=title,
+            title_align="left",
+            border_style=Style(color=Color.parse("blue")),
+        ),
+    )
+
+
+def config_table() -> Table:
+    return Table.grid("Key", "Label", "Value", padding=(0, 3))
 
 
 __all__ = ["Logger", "Table"]

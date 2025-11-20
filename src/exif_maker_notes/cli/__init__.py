@@ -10,7 +10,7 @@ from exif_maker_notes import __version__
 from .config import TyperState
 from .logger import setup_logger
 
-application = typer.Typer()
+application = typer.Typer(no_args_is_help=True)
 state = TyperState()
 
 
@@ -42,6 +42,38 @@ def main(
 ) -> None:
     """Exif Maker Notes CLI app."""
     state.debug = debug
+
+
+@application.command()
+def config(
+    key: Annotated[
+        str,
+        typer.Argument(
+            help="Configuration key to set or get.",
+        ),
+    ] = "",
+    value: Annotated[
+        str,
+        typer.Argument(
+            help="Configuration value to set.",
+        ),
+    ] = "",
+    file: Annotated[
+        Path,
+        typer.Option("-f", "--file", help="Configuration location."),
+    ] = Path(),
+) -> None:
+    """Show or edit configuration."""
+    from .config import load_configuration
+
+    configuration = load_configuration(file)
+
+    if not key:
+        configuration.print()
+    elif not value:
+        typer.echo(configuration.get_key(key))
+    else:
+        configuration.set_key(key, value)
 
 
 @application.command("list")

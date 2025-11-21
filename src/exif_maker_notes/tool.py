@@ -36,11 +36,14 @@ def set_metadata(
     photo: Path,
     tags: dict[str, str],
     logger: Logger | None = None,
+    dry_run: bool = False,
 ) -> None:
     """Set EXIF metadata for a photo."""
     if logger:
         logger.info("Setting metadata for %s:", photo)
         for key, value in tags.items():
             logger.info("  %s: %s", key, value)
-    with exiftool.ExifToolHelper() as et:
-        et.set_tags(photo, tags=tags, params=["-P"])
+
+    if not dry_run:
+        with exiftool.ExifToolHelper() as et:
+            et.set_tags(photo, tags=tags, params=["-P"])

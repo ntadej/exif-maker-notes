@@ -9,7 +9,7 @@ from typing import Any
 import tomli_w
 from platformdirs import user_config_dir
 
-from .logger import Table, config_table, info_panel
+from exif_maker_notes.cli.logger import Table, config_table, info_panel
 
 
 def strtobool(val: str) -> bool:

@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from exif_maker_notes.fixes.fix import Fix
 from exif_maker_notes.tool import list_metadata, set_metadata
-
-from .fix import Fix
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -20,13 +19,11 @@ class TimezoneFix(Fix):
         """Fix description."""
         return "Copy timezone information from Maker notes to the main EXIF."
 
-    def run(self, photos: list[Path]) -> None:
+    def run(self, photos: list[Path], dry_run: bool = False) -> None:
         """Run the timezone fix."""
         metadata = list_metadata(photos)
-        # Implement logic to copy timezone information
         for photo in photos:
             data = metadata.get(photo, {})
-            # Example logic (to be replaced with actual implementation)
             maker_note_timezone = data.get("MakerNotes:TimeZone")
             if maker_note_timezone:
                 if self.logger:
@@ -40,4 +37,5 @@ class TimezoneFix(Fix):
                     photo,
                     {"EXIF:OffsetTime": maker_note_timezone},
                     self.logger,
+                    dry_run=dry_run,
                 )

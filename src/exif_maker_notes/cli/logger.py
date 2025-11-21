@@ -14,7 +14,7 @@ from rich.style import Style
 from rich.table import Table
 
 if TYPE_CHECKING:
-    from .config import TyperState
+    from exif_maker_notes.cli.config import TyperState
 
 
 def setup_logger(state: TyperState, name: str | None = None) -> Logger:

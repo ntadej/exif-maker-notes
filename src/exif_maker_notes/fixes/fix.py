@@ -24,5 +24,5 @@ class Fix(ABC):
         """Fix description."""
 
     @abstractmethod
-    def run(self, photos: list[Path]) -> None:
+    def run(self, photos: list[Path], dry_run: bool = False) -> None:
         """Run the fix."""

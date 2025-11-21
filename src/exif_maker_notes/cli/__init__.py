@@ -6,9 +6,8 @@ from typing import Annotated
 import typer
 
 from exif_maker_notes import __version__
-
-from .config import TyperState
-from .logger import setup_logger
+from exif_maker_notes.cli.config import TyperState
+from exif_maker_notes.cli.logger import setup_logger
 
 application = typer.Typer(no_args_is_help=True)
 state = TyperState()
@@ -64,7 +63,7 @@ def config(
     ] = Path(),
 ) -> None:
     """Show or edit configuration."""
-    from .config import load_configuration
+    from exif_maker_notes.cli.config import load_configuration
 
     configuration = load_configuration(file)
 
@@ -101,10 +100,17 @@ def fix(
             help="List of photo paths.",
         ),
     ],
+    dry_run: Annotated[
+        bool,
+        typer.Option(
+            "--dry-run",
+            help="Run the fixes without making any changes.",
+        ),
+    ] = False,
 ) -> None:
     """Apply fixes to EXIF data for a list of photos."""
     logger = setup_logger(state, "fix")
 
     from exif_maker_notes.fixes import apply_fixes
 
-    apply_fixes(photos, logger)
+    apply_fixes(photos, logger, dry_run=dry_run)

@@ -143,5 +143,5 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--ignore=src/exif_maker_notes/tests/ --cov=exif_maker_notes --cov-report=term-missing:skip-covered --cov-report xml --cov-report html:coverage"
+addopts = "--ignore=src/exif_maker_notes/tests/ --cov=exif_maker_notes --cov-report=term-missing:skip-covered --cov-report xml --cov-report html:coverage --junitxml=junit.xml -o junit_family=legacy"
 testpaths = ["tests"]

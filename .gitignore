@@ -12,6 +12,7 @@ wheels/
 # Coverage
 .coverage
 coverage.xml
+junit.xml
 htmlcov/
 
 # Misc

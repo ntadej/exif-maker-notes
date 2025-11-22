@@ -42,9 +42,10 @@ def apply_fixes(
         for fix in fixes:
             fixes_to_apply.update(fix.apply(photo, metadata))
 
-        set_metadata(
-            photo,
-            fixes_to_apply,
-            logger,
-            dry_run=dry_run,
-        )
+        if fixes_to_apply:
+            set_metadata(
+                photo,
+                fixes_to_apply,
+                logger,
+                dry_run=dry_run,
+            )

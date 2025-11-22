@@ -41,7 +41,7 @@ class ExposureCompensationFix(Fix):
 
         exif_exposure_compensation = float(metadata.get("EXIF:ExposureCompensation", 0))
         updated_exposure_compensation = self.exposure_compensation_map[photo.name]
-        if abs(updated_exposure_compensation - exif_exposure_compensation) < 1e-5:  # noqa: PLR2004
+        if abs(updated_exposure_compensation - exif_exposure_compensation) < 1e-3:  # noqa: PLR2004
             return {}
 
         if self.logger:

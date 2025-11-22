@@ -11,7 +11,7 @@ def test_fix() -> None:
     """Test fix."""
     result = runner.invoke(
         application,
-        ["fix", "tests/data/NikonD5200.jpg"],
+        ["fix", "tests/data/NikonD5200.jpg", "--exposure", "tests/data/exposure.csv"],
         catch_exceptions=False,
     )
     assert result.exit_code == 0

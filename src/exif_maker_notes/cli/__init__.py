@@ -107,10 +107,17 @@ def fix(
             help="Run the fixes without making any changes.",
         ),
     ] = False,
+    exposure: Annotated[
+        Path,
+        typer.Option(
+            "--exposure",
+            help="Path to exposure correction configuration file.",
+        ),
+    ] = Path(),
 ) -> None:
     """Apply fixes to EXIF data for a list of photos."""
     logger = setup_logger(state, "fix")
 
     from exif_maker_notes.fixes import apply_fixes
 
-    apply_fixes(photos, logger, dry_run=dry_run)
+    apply_fixes(photos, logger, dry_run=dry_run, exposure_config=exposure)

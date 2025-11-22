@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import TYPE_CHECKING
 
+from exif_maker_notes.fixes.exposure import ExposureCompensationFix
 from exif_maker_notes.fixes.hardware import (
     BodyNormalizeNameFix,
     Lens35mmEquivalentFix,
@@ -13,19 +15,23 @@ from exif_maker_notes.fixes.timezone import TimezoneFix
 from exif_maker_notes.tool import list_metadata, set_metadata
 
 if TYPE_CHECKING:
-    from pathlib import Path
-
     from exif_maker_notes.cli.logger import Logger
     from exif_maker_notes.fixes.fix import Fix
 
 
-def apply_fixes(photos: list[Path], logger: Logger, dry_run: bool = False) -> None:
+def apply_fixes(
+    photos: list[Path],
+    logger: Logger,
+    dry_run: bool = False,
+    exposure_config: Path = Path(),
+) -> None:
     """Apply fixes to the given photos."""
     fixes: list[Fix] = [
         TimezoneFix(logger),
         BodyNormalizeNameFix(logger),
         LensModelFix(logger),
         Lens35mmEquivalentFix(logger),
+        ExposureCompensationFix(logger, exposure_config),
     ]
 
     metadata_list = list_metadata(photos)

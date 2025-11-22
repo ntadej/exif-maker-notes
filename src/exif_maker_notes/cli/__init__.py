@@ -121,3 +121,23 @@ def fix(
     from exif_maker_notes.fixes import apply_fixes
 
     apply_fixes(photos, logger, dry_run=dry_run, exposure_config=exposure)
+
+
+@application.command()
+def restore(
+    photos: Annotated[
+        list[Path],
+        typer.Argument(
+            help="List of photo paths.",
+        ),
+    ],
+) -> None:
+    """Restore original photos."""
+    logger = setup_logger(state, "restore")
+
+    from exif_maker_notes.tool import restore
+
+    for photo in photos:
+        if photo.name.endswith("_original"):
+            continue
+        restore(photo, logger)

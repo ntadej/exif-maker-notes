@@ -47,3 +47,12 @@ def set_metadata(
     if not dry_run:
         with exiftool.ExifToolHelper() as et:
             et.set_tags(photo, tags=tags, params=["-P"])
+
+
+def restore(photo: Path, logger: Logger | None = None) -> None:
+    """Restore EXIF metadata from a backup photo."""
+    if logger:
+        logger.info("Restoring metadata for %s", photo)
+
+    with exiftool.ExifToolHelper() as et:
+        et.execute("-P", "-restore_original", photo)

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from exif_maker_notes.fixes.hardware import LensModelFix
+from exif_maker_notes.fixes.hardware import Lens35mmEquivalentFix, LensModelFix
 from exif_maker_notes.fixes.timezone import TimezoneFix
 from exif_maker_notes.tool import list_metadata, set_metadata
 
@@ -20,6 +20,7 @@ def apply_fixes(photos: list[Path], logger: Logger, dry_run: bool = False) -> No
     fixes: list[Fix] = [
         TimezoneFix(logger),
         LensModelFix(logger),
+        Lens35mmEquivalentFix(logger),
     ]
 
     metadata_list = list_metadata(photos)

@@ -11,6 +11,47 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 
+class BodyNormalizeNameFix(Fix):
+    """Body normalize name fix."""
+
+    @property
+    def fix_description(self) -> str:
+        """Fix description."""
+        return "Normalize camera body name."
+
+    def apply(self, photo: Path, metadata: dict[str, str]) -> dict[str, str]:
+        """Apply the body normalize name fix."""
+        exif_make = updated_exif_make = metadata.get("EXIF:Make", "")
+        exif_model = updated_exif_model = metadata.get("EXIF:Model", "")
+
+        if exif_make == "NIKON CORPORATION":
+            updated_exif_make = "Nikon"
+        if exif_model.startswith("NIKON"):
+            updated_exif_model = exif_model.replace("NIKON ", "")
+
+        fixes = {}
+        if updated_exif_make != exif_make:
+            fixes["EXIF:Make"] = updated_exif_make
+            if self.logger:
+                self.logger.info(
+                    "Normalizing body make for %s from %s to %s",
+                    photo,
+                    exif_make,
+                    updated_exif_make,
+                )
+        if updated_exif_model != exif_model:
+            fixes["EXIF:Model"] = updated_exif_model
+            if self.logger:
+                self.logger.info(
+                    "Normalizing body model for %s from %s to %s",
+                    photo,
+                    exif_model,
+                    updated_exif_model,
+                )
+
+        return fixes
+
+
 class LensModelFix(Fix):
     """Lens model fix."""
 
@@ -36,7 +77,7 @@ class LensModelFix(Fix):
             lens_full = f"{lens} {lens_type}"
 
         if "Nikkor" in lens_id:
-            lens_make = "Nikon Corporation"
+            lens_make = "Nikon"
             lens_full = f"Nikkor {lens_full}"
         else:
             lens_make = ""

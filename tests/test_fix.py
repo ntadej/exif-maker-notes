@@ -15,3 +15,13 @@ def test_fix() -> None:
         catch_exceptions=False,
     )
     assert result.exit_code == 0
+
+
+def test_restore() -> None:
+    """Test restore."""
+    result = runner.invoke(
+        application,
+        ["restore", "tests/data/NikonD5200.jpg"],
+        catch_exceptions=False,
+    )
+    assert result.exit_code == 0

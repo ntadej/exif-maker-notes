@@ -24,6 +24,7 @@ def apply_fixes(
     logger: Logger,
     dry_run: bool = False,
     exposure_config: Path = Path(),
+    strict: bool = False,
 ) -> None:
     """Apply fixes to the given photos."""
     fixes: list[Fix] = [
@@ -31,7 +32,7 @@ def apply_fixes(
         BodyNormalizeNameFix(logger),
         LensModelFix(logger),
         Lens35mmEquivalentFix(logger),
-        ExposureCompensationFix(logger, exposure_config),
+        ExposureCompensationFix(logger, exposure_config, strict),
     ]
 
     metadata_list = list_metadata(photos)

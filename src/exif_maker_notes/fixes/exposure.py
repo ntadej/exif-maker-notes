@@ -16,7 +16,12 @@ if TYPE_CHECKING:
 class ExposureCompensationFix(Fix):
     """Exposure compensation fix."""
 
-    def __init__(self, logger: Logger | None, config_path: Path) -> None:
+    def __init__(
+        self,
+        logger: Logger | None,
+        config_path: Path,
+        strict: bool = False,
+    ) -> None:
         """Initialize the exposure compensation fix."""
         if not config_path.exists() or not config_path.is_file():
             error = f"Exposure compensation configuration file not found: {config_path}"
@@ -24,9 +29,16 @@ class ExposureCompensationFix(Fix):
 
         super().__init__(logger)
         self.config_path = config_path
+        self.strict = strict
 
         with config_path.open() as f:
             reader = csv.reader(f)
+            header = next(reader)
+            if not header[1].lower().startswith("exposure"):
+                error = (
+                    f"Invalid exposure compensation configuration file: {config_path}"
+                )
+                raise ValueError(error)
             self.exposure_compensation_map = {row[0]: float(row[1]) for row in reader}
 
     @property
@@ -36,11 +48,24 @@ class ExposureCompensationFix(Fix):
 
     def apply(self, photo: Path, metadata: dict[str, str]) -> dict[str, str]:
         """Apply the exposure compensation fix."""
-        if photo.name not in self.exposure_compensation_map:
+        if (
+            photo.name not in self.exposure_compensation_map
+            and photo.stem not in self.exposure_compensation_map
+        ):
+            if self.strict:
+                error = (
+                    f"Photo {photo.name} not found"
+                    " in exposure compensation configuration."
+                )
+                raise ValueError(error)
             return {}
 
         exif_exposure_compensation = float(metadata.get("EXIF:ExposureCompensation", 0))
-        updated_exposure_compensation = self.exposure_compensation_map[photo.name]
+        updated_exposure_compensation = (
+            self.exposure_compensation_map[photo.name]
+            if photo.name in self.exposure_compensation_map
+            else self.exposure_compensation_map[photo.stem]
+        )
         if abs(updated_exposure_compensation - exif_exposure_compensation) < 1e-3:  # noqa: PLR2004
             return {}
 

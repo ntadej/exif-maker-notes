@@ -114,13 +114,26 @@ def fix(
             help="Path to exposure correction configuration file.",
         ),
     ] = Path(),
+    strict: Annotated[
+        bool,
+        typer.Option(
+            "--strict",
+            help="Strict mode: CSV files need to match photos exactly.",
+        ),
+    ] = False,
 ) -> None:
     """Apply fixes to EXIF data for a list of photos."""
     logger = setup_logger(state, "fix")
 
     from exif_maker_notes.fixes import apply_fixes
 
-    apply_fixes(photos, logger, dry_run=dry_run, exposure_config=exposure)
+    apply_fixes(
+        photos,
+        logger,
+        dry_run=dry_run,
+        exposure_config=exposure,
+        strict=strict,
+    )
 
 
 @application.command()

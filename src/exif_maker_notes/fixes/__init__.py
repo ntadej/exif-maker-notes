@@ -37,6 +37,12 @@ def apply_fixes(
 
     metadata_list = list_metadata(photos)
     for photo in photos:
+        if photo.name.endswith("_original"):
+            continue
+
+        if (photo.parent / f"{photo.name}_original").exists():
+            continue
+
         metadata = metadata_list.get(photo, {})
 
         fixes_to_apply: dict[str, str] = {}

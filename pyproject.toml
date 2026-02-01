@@ -22,7 +22,7 @@ classifiers = [
 dependencies = [
     "platformdirs == 4.*",
     "pyexiftool == 0.5.*",
-    "rich == 14.2.*",
+    "rich ==14.3.*",
     "typer-slim[standard] == 0.20.*",
     "tomli-w == 1.*",
 ]

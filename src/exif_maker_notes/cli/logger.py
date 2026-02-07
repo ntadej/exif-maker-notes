@@ -19,6 +19,7 @@ if TYPE_CHECKING:
 
 def setup_logger(state: TyperState, name: str | None = None) -> Logger:
     """Prepare logger and write the log file."""
+    file_handler = None
     if name and state.log_path is not None:
         file_formatter = Formatter(
             "%(asctime)s %(levelname)-8s %(message)s",
@@ -39,7 +40,7 @@ def setup_logger(state: TyperState, name: str | None = None) -> Logger:
     )
 
     logger = getLogger()
-    if name and state.log_path is not None:
+    if file_handler:
         logger.addHandler(file_handler)
     logger.addHandler(stream_handler)
     if state.debug:  # pragma: no cover

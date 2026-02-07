@@ -22,20 +22,20 @@ classifiers = [
 dependencies = [
     "platformdirs == 4.*",
     "pyexiftool == 0.5.*",
-    "rich == 14.2.*",
-    "typer-slim[standard] == 0.20.*",
+    "rich == 14.3.*",
+    "typer-slim[standard] == 0.21.*",
     "tomli-w == 1.*",
 ]
 
 [dependency-groups]
 dev = [
     "coverage[toml]",
-    "mypy == 1.18.2",
+    "mypy == 1.19.1",
     "pre-commit-hooks == 6.0.*",
     "pre-commit",
     "pytest",
     "pytest-cov",
-    "ruff == 0.14.5",
+    "ruff == 0.15.0",
 ]
 
 [project.scripts]

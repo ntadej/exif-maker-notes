@@ -36,7 +36,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "ruff == 0.15.0",
-    "ty == 0.0.15",
+    "ty ==0.0.17",
 ]
 
 [project.scripts]

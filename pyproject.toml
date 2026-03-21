@@ -5,12 +5,11 @@ description = "An (opinionated) tool to read EXIF Maker Notes and propagate them
 authors = [{ name = "Tadej Novak", email = "tadej@tano.si" }]
 requires-python = ">= 3.11"
 readme = "README.md"
-license = { text = "MPL-2.0" }
+license = "MPL-2.0"
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Environment :: Console",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -23,7 +22,7 @@ dependencies = [
     "platformdirs == 4.*",
     "pyexiftool == 0.5.*",
     "rich == 14.3.*",
-    "typer-slim[standard] == 0.21.*",
+    "typer == 0.24.*",
     "tomli-w == 1.*",
 ]
 
@@ -35,8 +34,8 @@ dev = [
     "pre-commit",
     "pytest",
     "pytest-cov",
-    "ruff == 0.15.0",
-    "ty == 0.0.15",
+    "ruff == 0.15.7",
+    "ty == 0.0.24",
 ]
 
 [project.scripts]

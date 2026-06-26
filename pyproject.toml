@@ -22,7 +22,7 @@ dependencies = [
     "platformdirs == 4.*",
     "pyexiftool == 0.5.*",
     "rich == 15.0.*",
-    "typer == 0.25.*",
+    "typer ==0.26.*",
     "tomli-w == 1.*",
 ]
 

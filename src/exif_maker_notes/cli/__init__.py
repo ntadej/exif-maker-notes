@@ -29,7 +29,7 @@ def main(
             help="Run with debug printouts.",
         ),
     ] = False,
-    version: Annotated[  # noqa: ARG001
+    version: Annotated[  # ruff: ignore[unused-function-argument]
         bool,
         typer.Option(
             "--version",

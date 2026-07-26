@@ -1,0 +1,1 @@
+"""Exif Maker Notes Tests."""

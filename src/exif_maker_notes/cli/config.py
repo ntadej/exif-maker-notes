@@ -20,9 +20,9 @@ def strtobool(val: str) -> bool:
     'val' is anything else.
     """
     val = val.lower()
-    if val in ("y", "yes", "t", "true", "on", "1"):
+    if val in {"y", "yes", "t", "true", "on", "1"}:
         return True
-    if val in ("n", "no", "f", "false", "off", "0"):
+    if val in {"n", "no", "f", "false", "off", "0"}:
         return False
     error = f"invalid truth value {val!r}"
     raise ValueError(error)
@@ -52,10 +52,10 @@ class Configuration:
 
         self.fixes = FixesConfiguration(config.get("fixes", {}))
 
-    def get_key(self, key: str) -> Any:  # noqa: ANN401
+    def get_key(self, key: str) -> Any:  # ruff: ignore[any-type]
         """Get configuration key."""
         split_key = key.split(".")
-        if len(split_key) != 2:  # noqa: PLR2004
+        if len(split_key) != 2:  # ruff: ignore[magic-value-comparison]
             error = f"Invalid configuration key: {key}"
             raise KeyError(error)
 
@@ -73,7 +73,7 @@ class Configuration:
     def set_key(self, key: str, value: str) -> None:
         """Set configuration key."""
         split_key = key.split(".")
-        if len(split_key) != 2:  # noqa: PLR2004
+        if len(split_key) != 2:  # ruff: ignore[magic-value-comparison]
             error = f"Invalid configuration key: {key}"
             raise KeyError(error)
 
@@ -110,7 +110,8 @@ class Configuration:
         info_panel(self.to_table(), title="Main Configuration")
         info_panel(self.fixes.to_table(), title="Fixes Configuration")
 
-    def write(self, output_file: Path, config_object: dict[str, Any]) -> None:
+    @staticmethod
+    def write(output_file: Path, config_object: dict[str, Any]) -> None:
         """Write configuration to file."""
         if not output_file.parent.exists():
             output_file.parent.mkdir(parents=True)

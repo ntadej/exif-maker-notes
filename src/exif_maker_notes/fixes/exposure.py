@@ -31,7 +31,7 @@ class ExposureCompensationFix(Fix):
         self.config_path = config_path
         self.strict = strict
 
-        with config_path.open() as f:
+        with config_path.open(encoding="utf-8") as f:
             reader = csv.reader(f)
             header = next(reader)
             if not header[1].lower().startswith("exposure"):
@@ -66,7 +66,7 @@ class ExposureCompensationFix(Fix):
             if photo.name in self.exposure_compensation_map
             else self.exposure_compensation_map[photo.stem]
         )
-        if abs(updated_exposure_compensation - exif_exposure_compensation) < 1e-3:  # noqa: PLR2004
+        if abs(updated_exposure_compensation - exif_exposure_compensation) < 1e-3:  # ruff: ignore[magic-value-comparison]
             return {}
 
         if self.logger:

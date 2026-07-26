@@ -115,7 +115,7 @@ class Lens35mmEquivalentFix(Fix):
         focal_length_raw = float(focal_length.split(" ")[0])
         if current_35mm_equivalent:
             current_35mm_equivalent_raw = float(current_35mm_equivalent.split(" ")[0])
-            if abs(current_35mm_equivalent_raw - focal_length_raw) > 1e-3:  # noqa: PLR2004
+            if abs(current_35mm_equivalent_raw - focal_length_raw) > 1e-3:  # ruff: ignore[magic-value-comparison]
                 return {}
 
         updated_35mm_equivalent_raw = ceil(focal_length_raw * 1.5)

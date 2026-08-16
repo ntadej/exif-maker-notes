@@ -22,6 +22,7 @@ if TYPE_CHECKING:
 def apply_fixes(
     photos: list[Path],
     logger: Logger,
+    *,
     dry_run: bool = False,
     exposure_config: Path = Path(),
     strict: bool = False,
@@ -32,7 +33,7 @@ def apply_fixes(
         BodyNormalizeNameFix(logger),
         LensModelFix(logger),
         Lens35mmEquivalentFix(logger),
-        ExposureCompensationFix(logger, exposure_config, strict),
+        ExposureCompensationFix(logger, exposure_config, strict=strict),
     ]
 
     metadata_list = list_metadata(photos)

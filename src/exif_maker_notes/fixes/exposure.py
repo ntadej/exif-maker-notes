@@ -20,6 +20,7 @@ class ExposureCompensationFix(Fix):
         self,
         logger: Logger | None,
         config_path: Path,
+        *,
         strict: bool = False,
     ) -> None:
         """Initialize the exposure compensation fix."""

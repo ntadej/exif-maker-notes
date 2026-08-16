@@ -29,13 +29,13 @@ dependencies = [
 [dependency-groups]
 dev = [
     "coverage[toml]",
-    "mypy == 2.3.0",
+    "mypy == 2.3.1",
     "pre-commit-hooks == 6.0.*",
     "pre-commit",
     "pytest",
     "pytest-cov",
-    "ruff == 0.16.0",
-    "ty == 0.0.63",
+    "ruff == 0.16.3",
+    "ty == 0.0.72",
 ]
 
 [project.scripts]
@@ -124,17 +124,19 @@ select = [
     "TRY",  # tryceratops
 ]
 ignore = [
-    "D203",    # one-blank-line-before-class (conflicting with no-blank-line-before-class)
-    "D213",    # multi-line-summary-second-line (conflicting with multi-line-summary-first-line)
-    "FBT001",  # boolean-positional-arg-in-function-definition (not wanted)
-    "FBT002",  # boolean-default-value-in-function-definition (not wanted)
-    "PLC0415", # import-outside-top-level (not wanted)
-    "RUF067",  # non-empty-init-module (not wanted)
+    "incorrect-blank-line-before-class", # conflicting with no-blank-line-before-class
+    "multi-line-summary-second-line",    # conflicting with multi-line-summary-first-line
+    "non-empty-init-module",             # not wanted
 ]
 pylint = { max-args = 12 }
 
 [tool.ruff.lint.per-file-ignores]
-"**/tests/*" = ["S101"]
+"src/exif_maker_notes/cli/__init__.py" = [
+    "boolean-type-hint-positional-argument",
+    "boolean-default-value-positional-argument",
+    "import-outside-top-level",
+]
+"**/tests/*" = ["assert"]
 
 [tool.ty.environment]
 python-version = "3.11"

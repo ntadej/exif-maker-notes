@@ -36,6 +36,7 @@ def set_metadata(
     photo: Path,
     tags: dict[str, str],
     logger: Logger | None = None,
+    *,
     dry_run: bool = False,
 ) -> None:
     """Set EXIF metadata for a photo."""
